@@ -1,0 +1,37 @@
+Table: users
+Type: CREATE TYPE user_role_enum AS ENUM ('System Administrator', 'Purchasing Manager', 'Field Sales Associate');
+Fields:
+id serial Primary Key | role user_role_enum NOT NULL | first_name varchar(50) NOT NULL | surname varchar(50) NOT NULL | telephone varchar(20) NOT NULL | email text NOT NULL | email_verified_at timestamp NULL | password varchar(255) NOT NULL | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: businesses
+Type: CREATE TYPE business_type_enum AS ENUM ('distributor', 'supplier');
+Fields: 
+id serial Primary Key | type business_type_enum NOT NULL | name text NOT NULL | address text NOT NULL | country varchar(25) NOT NULL | vat_number varchar(15) NOT NULL | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: contacts
+Fields: 
+id serial Primary Key | business_id serial Foreign Key | type enum (sales, logistics) | primary boolean default false | name varchar(50) NOT NULL | email text NOT NULL | telephone varchar(20) NOT NULL | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: products
+Fields:
+id serial Primary Key | product_code varchar(50) NOT NULL | description text NOT NULL | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: product_prices
+Fields:
+id serial Primary Key | product_id serial Foreign Key | year int NOT NULL | cost_per_kg numeric(10,2) | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: purchase_orders
+Type: CREATE TYPE po_type_enum AS ENUM ('pos', 'pod');
+Fields:
+id serial Primary Key | type po_type_enum NOT NULL | parent_id serial NULL | business_id serial Foreign Key | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+
+
+Table: purchase_order_items
+Type: CREATE TYPE status_enum AS ENUM ('New', 'Accepted by Supplier', 'In Delivery', 'Rejected by Supplier', 'Rejected by Distributor', 'Cancelled');
+Fields:
+id serial Primary Key | purchase_order_id serial Foreign Key | product_id serial Foreign Key | quantity int NOT NULL | delivery_date timestamp NOT NULL | cost numeric(10,2) | status status_enum NOT NULL | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
