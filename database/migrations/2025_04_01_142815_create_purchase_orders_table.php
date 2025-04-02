@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId("business_id")->onDelete("cascade");
 
             $table->timestamps();
+
+            $table->index(["type", "business_id", "created_at", "parent_id"]);
         });
     }
 

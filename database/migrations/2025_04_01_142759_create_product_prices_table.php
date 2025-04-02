@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -19,7 +20,16 @@ return new class extends Migration
             $table->decimal("cost_per_kg", 10, 2);
 
             $table->timestamps();
+            
+
+
         });
+
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            DB::statement("CREATE INDEX idx_product_prices ON product_prices (product_id, year) INCLUDE (cost_per_kg)");
+        } else {
+            DB::statement("CREATE INDEX idx_product_prices ON product_prices (product_id, year)");
+        }
     }
 
     /**

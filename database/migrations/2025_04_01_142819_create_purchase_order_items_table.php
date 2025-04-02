@@ -28,6 +28,8 @@ return new class extends Migration
             ]);
             
             $table->timestamps();
+
+            $table->index(["purchase_order_id", "product_id", "status", "delivery_date"]);
         });
     }
 

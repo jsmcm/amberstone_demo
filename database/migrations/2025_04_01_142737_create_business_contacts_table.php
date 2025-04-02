@@ -27,9 +27,13 @@ return new class extends Migration
             $table->string("telephone", 20);
 
             $table->timestamps();
-
-            DB::statement('CREATE INDEX idx_business_contacts_main_query ON business_contacts (business_id, type, primary) INCLUDE (name, email, telephone)');
         });
+
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            DB::statement('CREATE INDEX idx_business_contacts_main_query ON business_contacts (business_id, type, is_primary) INCLUDE (name, email, telephone)');
+        } else {
+            DB::statement('CREATE INDEX idx_business_contacts_main_query ON business_contacts (business_id, type, is_primary)');
+        }
     }
 
     /**
@@ -37,7 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('business_contacts');
         DB::statement("DROP INDEX IF EXISTS idx_business_contacts_main_query");
     }
 };

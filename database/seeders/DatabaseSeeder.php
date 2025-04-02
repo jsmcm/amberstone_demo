@@ -22,12 +22,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $table->enum("role", [
-            'System Administrator',
-            'Purchasing Manager',
-            'Field Sales Associate'
-        ]);
-
 
         $products = [
             [
@@ -110,5 +104,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        $this->call(UserRoles::class);
     }
 }

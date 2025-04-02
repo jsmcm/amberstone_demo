@@ -27,10 +27,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index("type");
+            
         });
 
-        DB::statement('CREATE EXTENSION IF NOT EXISTS pg_trgm');
-        DB::statement('CREATE INDEX idx_businesses_name_trgm ON businesses USING gin (name gin_trgm_ops)');
+        // Wrap this so our unit tests work
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            DB::statement('CREATE EXTENSION IF NOT EXISTS pg_trgm');
+            DB::statement('CREATE INDEX idx_businesses_name_trgm ON businesses USING gin (name gin_trgm_ops)');
+        }
     }
 
     /**
