@@ -14,15 +14,12 @@ return new class extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId("product_id")->onDelete("cascade");
             $table->integer("year");
             $table->decimal("cost_per_kg", 10, 2);
 
             $table->timestamps();
-            
-
-
         });
 
         if (DB::connection()->getDriverName() === 'pgsql') {
@@ -37,6 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        DB::statement("DROP INDEX IF EXISTS idx_product_prices");
         Schema::dropIfExists('product_prices');
     }
 };
