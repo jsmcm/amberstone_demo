@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -19,12 +20,17 @@ return new class extends Migration
                 'supplier'
             ]);
             $table->string("name");
-            $table->text("address");
+            $table->string("address");
             $table->string("country", 25);
-            $table->string("vat_number", 15);
+            $table->string("vat_number", 15)->unique();
 
             $table->timestamps();
+
+            $table->index("type");
         });
+
+        DB::statement('CREATE EXTENSION IF NOT EXISTS pg_trgm');
+        DB::statement('CREATE INDEX idx_businesses_name_trgm ON businesses USING gin (name gin_trgm_ops)');
     }
 
     /**
@@ -33,5 +39,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('businesses');
+        DB::statement('DROP INDEX IF EXISTS idx_businesses_name_trgm');
     }
 };

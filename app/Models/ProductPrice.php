@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductPrice extends Model
 {
-    //
+
+    protected $fillable = [
+        "product_id",
+        "year",
+        "cost_per_kg"
+    ];
 }
