@@ -12,4 +12,9 @@ class ProductPrice extends Model
         "year",
         "cost_per_kg"
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
