@@ -67,8 +67,9 @@ CREATE INDEX idx_product_prices ON product_prices (product_id, year) INCLUDE (co
 
 Table: purchase_orders
 Type: CREATE TYPE po_type_enum AS ENUM ('pos', 'pod');
+      CREATE TYPE po_status_enum AS ENUM ('pending', 'accepted', 'rejected', 'delivered');
 Fields:
-id serial Primary Key | type po_type_enum NOT NULL | parent_id NULL | business_id int NOT NULL REFERENCES businesses(id) | created_at timestamp NOT NULL | updated_at timestamp NOT NULL
+id serial Primary Key | type po_type_enum NOT NULL | parent_id NULL | business_id int NOT NULL REFERENCES businesses(id) | status po_status_enum NOT NULL, created_at timestamp NOT NULL | updated_at timestamp NOT NULL
 
 CREATE INDEX idx_purchase_orders_type ON purchase_orders(type);
 CREATE INDEX idx_purchase_orders_business_id ON purchase_orders(business_id);

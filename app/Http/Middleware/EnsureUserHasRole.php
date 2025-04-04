@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ensureUserHasRole
+class EnsureUserHasRole
 {
 
     public function __construct(private AuthService $authService) {}
@@ -19,8 +19,15 @@ class ensureUserHasRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
+        if ( ! auth()->check()) {
+            return redirect("login");
+        }
+
         if (! $this->authService->isAuthorised($request->user()->role, $role)) {
-            return redirect("home");
+            return redirect()->route('dashboard')->with([
+                'message' => 'You are not authorized to access that page.',
+                'type' => 'error'
+            ]);
         }
         return $next($request);
     }

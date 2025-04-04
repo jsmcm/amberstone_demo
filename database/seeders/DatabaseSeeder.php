@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Business;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,5 +22,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(ProductSeeder::class);
+
+        if (env("APP_ENV") == "local") {
+            $this->call(UsersSeeder::class);
+
+            $this->call(BusinessSeeder::class);
+        }
+    
     }
 }

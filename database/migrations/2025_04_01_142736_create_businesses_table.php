@@ -21,7 +21,7 @@ return new class extends Migration
             ]);
             $table->string("name");
             $table->string("address");
-            $table->string("country", 25);
+            $table->string("country", 50);
             $table->string("vat_number", 15)->unique();
 
             $table->timestamps();

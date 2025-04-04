@@ -46,7 +46,6 @@ class AuthService
             throw new Exception("Invalid requiredRole supplied");
         }
 
-
         $givenRoleIndex = array_search($givenRole, $roles);
         $requiredRoleIndex = array_search($requiredRole, $roles);
 

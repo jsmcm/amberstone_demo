@@ -40,6 +40,22 @@ const businessAddress = computed(() => {
                 <strong>VAT Number: </strong><br />
                 {{ business.vat_number }}
             </p>
+
+            <p v-if="business?.sales_contact?.name != null">
+                <strong>Sales Contact: </strong><br />
+                Name: {{ business.sales_contact.name }}<br />
+                Email: {{ business.sales_contact.email }}<br />
+                Telephone: {{ business.sales_contact.telephone }}<br />
+            </p>
+
+            <p v-if="business?.logistics_contact?.name != null">
+                <strong>Logistics Contact: </strong><br />
+                Name: {{ business.logistics_contact.name }}<br />
+                Email: {{ business.logistics_contact.email }}<br />
+                Telephone: {{ business.logistics_contact.telephone }}<br />
+            </p>
+
+
         </div>
     </div>
 </template>

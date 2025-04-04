@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BusinessCreateRequest;
 use App\Http\Requests\BusinessIndexRequest;
 use App\Models\Business;
 use Illuminate\Http\Request;
@@ -15,8 +16,11 @@ class BusinessController extends Controller
      */
     public function index(BusinessIndexRequest $request)
     {
-        Log::debug("in businesscontroller index");
-        $businessBuilder = Business::with("primaryContact");
+        $isApi = $request->header("accept") == "application/json";
+
+        $businessBuilder = Business::with("salesContact")
+        ->with("logisticsContact")
+        ->orderBy("name", "ASC");
 
         if ($request->filled("type")) {
             $businessBuilder->where("type", $request["type"]);
@@ -28,10 +32,16 @@ class BusinessController extends Controller
             $businesses = $businessBuilder->get();
         }
 
-        return Inertia::render("businesses/Index", [
+        $data = [
             "businesses" => $businesses,
             "filters"    => $request->only('type', 'per_page', 'page'),
-        ]);
+        ];
+
+        if ($isApi) {
+            return response()->json($data);
+        }
+
+        return Inertia::render("businesses/Index", $data);
     }
 
     /**
@@ -39,15 +49,16 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("businesses/Create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BusinessCreateRequest $request)
     {
-        //
+        Business::create($request->all());
+        return redirect()->route('businesses')->with('success', 'Business created successfully.');
     }
 
     /**
@@ -55,7 +66,12 @@ class BusinessController extends Controller
      */
     public function show(Business $business)
     {
-        //
+        if ( ! auth()->user()->can("view", $business)) {
+            abort(403, "Not authorized");
+        }
+
+        //return Inertia::render("businesses/Business", $business);
+        return $business;
     }
 
     /**
@@ -63,7 +79,11 @@ class BusinessController extends Controller
      */
     public function edit(Business $business)
     {
-        //
+        if ( ! auth()->user()->can("view", $business)) {
+            abort(403, "Not authorized");
+        } 
+        
+        return "show update form";
     }
 
     /**
@@ -71,7 +91,18 @@ class BusinessController extends Controller
      */
     public function update(Request $request, Business $business)
     {
-        //
+        if ( ! auth()->user()->can("update", $business)) {
+            abort(403, "Not authorized");
+        }  
+
+        $return = [
+            "validate data",
+            "set the new values",
+            "save (\$business->save();",
+            "redirect to /business with flash message",
+        ];
+        
+        return $return;
     }
 
     /**
@@ -79,6 +110,8 @@ class BusinessController extends Controller
      */
     public function destroy(Business $business)
     {
-        //
+        if ( ! auth()->user()->can("delete", $business)) {
+            abort(403, "Not authorized");
+        }  
     }
 }

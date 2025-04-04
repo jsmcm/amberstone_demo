@@ -20,6 +20,12 @@ return new class extends Migration
             ]);
             $table->integer("parent_id")->nullable();
             $table->foreignId("business_id")->onDelete("cascade");
+            $table->enum("status", [
+                "pending",
+                "accepted",
+                "rejected",
+                "delivered",
+            ]);
 
             $table->timestamps();
 

@@ -34,7 +34,7 @@ class BusinessContactController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Contact $contact)
+    public function show(BusinessContact $contact)
     {
         //
     }
@@ -42,7 +42,7 @@ class BusinessContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Contact $contact)
+    public function edit(BusinessContact $contact)
     {
         //
     }
@@ -50,7 +50,7 @@ class BusinessContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, BusinessContact $contact)
     {
         //
     }
@@ -58,7 +58,7 @@ class BusinessContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contact $contact)
+    public function destroy(BusinessContact $contact)
     {
         //
     }

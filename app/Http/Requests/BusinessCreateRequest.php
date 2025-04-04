@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use App\Models\Business;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BusinessIndexRequest extends FormRequest
+class BusinessCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user()->can("viewAny", Business::class);
+        return auth()->user()->can("create", Business::class);
     }
 
     /**
@@ -23,8 +23,11 @@ class BusinessIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "type" => "sometimes|string|in:distributor,supplier",
-            "per_page" => "sometimes|numeric|min:1|max:500",
+            "type" => "required|string|in:distributor,supplier",
+            "name" => "required|string",
+            "address" => "required|string",
+            "country" => "required|string",
+            "vat_number" => "required|string",
         ];
     }
 }
