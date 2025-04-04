@@ -68,6 +68,7 @@ The database layout can be found in the root folder as DATABASE.txt. I have take
     a. admin@example.com => password = admin
     b. manager@example.com => password = manager
     c. sales@example.com => password = sales
+5. composer run dev and then open, probably http://localhost:8000
 
 I have stubbed most things, except for the Businesses (suppliers and distributors) listing page, which is linked to in the side nav.
 Per instructions I have used axios within that page to achieve filtering. The initial page load is via and Interia route.
