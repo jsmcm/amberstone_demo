@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_roles', function (Blueprint $table) {
-            $table->id();
+        // NOT DOING IT THIS WAY, IT COMPLICATES
+        // MIDDLEWARE TOO MUCH TRYING TO THINK ABOUT
+        // WHAT TO DO IF NEW USER TYPES ARE ADDED INTO
+        // THE DB BUT ARE NOT ACCOUNTED FOR IN THE CODE
 
-            $table->string("role", 50)->unique();
+        // Schema::create('user_roles', function (Blueprint $table) {
+        //     $table->id();
 
-            $table->timestamps();
-        });
+        //     $table->string("role", 50)->unique();
+
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_roles');
+        // Schema::dropIfExists('user_roles');
     }
 };

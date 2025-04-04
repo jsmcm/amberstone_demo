@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\UserRole;
+use App\Services\AuthService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,7 +27,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'role_id' => 1,
+            'role' => (new AuthService())->allRoles()[0],
             'email' => fake()->unique()->safeEmail(),
             'telephone' => fake()->unique()->numerify('081########'),
             'email_verified_at' => now(),
@@ -41,7 +42,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

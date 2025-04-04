@@ -12,8 +12,28 @@ The database layout can be found in the root folder as DATABASE.txt. I have take
 
 ## Use of ChatGPT
 
-I primarily used ChatGPT around the database design. I am more familiar with MySQL than PostgreSQL (my last use of PostgreSQL was June last year on a short contract. The db was already in place so I hardly touched it directly other than a few update migrations).
+### Database
 
-I designed the DB in a text editor and then I copied your entire specification into ChatGPT and asked it to check that 1: my design was an accurate representation of your specification and 2: to help my name fields correctly (for instance I had used datetime instead of timestamp).
+    I primarily used ChatGPT around the database design. I am more familiar with MySQL than PostgreSQL (my last use of PostgreSQL was June last year on a short contract. The db was already in place so I hardly touched it directly other than a few update migrations).
 
-I also asked it to help my choose efficient indexes. Full disclosure, the indexes were almost entirely ChatGPT's work (so if they're wrong don't blame me).
+    I designed the DB in a text editor and then I copied your entire specification into ChatGPT and asked it to check that 1: my design was an accurate representation of your specification and 2: to help my name fields correctly (for instance I had used datetime instead of timestamp).
+
+    I also asked it to help my choose efficient indexes. Full disclosure, the indexes were almost entirely ChatGPT's work (so if they're wrong don't blame me).
+
+### General
+
+    I often paste functions are whole classes into ChatGPT to check if I have done things according to best practice or efficiency etc.
+
+### Faker
+
+    I do use ChatGPT to go from a migration to the best faker functions for model factories
+
+### CSS
+
+    Not my forte... nuff said
+
+## Future Plans
+
+1. User roles.
+
+    I've used a very simply approaching with a few hard coded user roles per the requirements and a comparing array indexes to determine if a user has a particular capability. For future use I would possibly store the roles in the DB and use a package like Spatie Permissions.

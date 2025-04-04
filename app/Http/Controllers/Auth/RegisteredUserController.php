@@ -38,15 +38,14 @@ class RegisteredUserController extends Controller
         ]);
 
         // If we implemented a form in the admin area which actually had
-        // a field for roleId we wouldn't necessarily do things this way,
+        // a field for role we wouldn't necessarily do things this way,
         // but for now....
-        $role = UserRole::firstOrCreate(["role" => "Field Sales Associate"]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'telephone' => fake()->unique()->numerify("081#######"), // our form should also get a telephone number, but not going to do that for this demo
-            'role_id' => $role->id,
+            'role' => "Field Sales Associate",
             'password' => Hash::make($request->password),
         ]);
 

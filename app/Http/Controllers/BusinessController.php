@@ -2,17 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BusinessIndexRequest;
 use App\Models\Business;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class BusinessController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(BusinessIndexRequest $request)
     {
-        //
+        Log::debug("in businesscontroller index");
+        $businessBuilder = Business::with("primaryContact");
+
+        if ($request->filled("type")) {
+            $businessBuilder->where("type", $request["type"]);
+        }
+
+        if ($request->filled("per_page")) {
+            $businesses = $businessBuilder->paginate($request["per_page"])->withQueryString();
+        } else {
+            $businesses = $businessBuilder->get();
+        }
+
+        return Inertia::render("businesses/Index", [
+            "businesses" => $businesses,
+            "filters"    => $request->only('type', 'per_page', 'page'),
+        ]);
     }
 
     /**

@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'telephone',
-        'role_id',
+        'role',
         'password',
     ];
 
@@ -37,10 +37,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [
-        "role"
-    ];
-
     /**
      * Get the attributes that should be cast.
      *
@@ -52,12 +48,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function role(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => UserRole::find($this->role_id)->role,
-        );
     }
 }

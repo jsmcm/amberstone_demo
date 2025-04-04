@@ -25,7 +25,6 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $this->seed(UserRoles::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
@@ -37,13 +36,12 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $this->seed(UserRoles::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
+            $response = $this->get('/reset-password/' . $notification->token);
 
             $response->assertStatus(200);
 
@@ -55,7 +53,6 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $this->seed(UserRoles::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
